@@ -1,0 +1,169 @@
+import React, { useState } from "react";
+import "./AdminDashboard.css";
+
+export default function AdminDashboard() {
+  const [seccionActiva, setSeccionActiva] = useState("ordenes");
+
+  return (
+    <div className="admin-dashboard">
+      <aside className="sidebar">
+        <h2>👤 Bienvenido, Administrador</h2>
+        <nav>
+          <ul>
+            <li onClick={() => setSeccionActiva("ordenes")}>📋 Órdenes</li>
+            <li onClick={() => setSeccionActiva("usuarios")}>👥 Usuarios</li>
+            <li onClick={() => setSeccionActiva("productos")}>📦 Productos</li>
+            <li onClick={() => setSeccionActiva("categorias")}>📂 Categorías</li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main className="dashboard-content">
+        {seccionActiva === "ordenes" && (
+          <section className="ordenes">
+            <header className="ordenes-header">
+              <h3>Órdenes</h3>
+              <input type="text" placeholder="🔍 Buscar" />
+              <div className="filtros">
+                <input type="date" /> <input type="date" />
+              </div>
+            </header>
+
+            <div className="orden">
+              <p><strong>14 de Abril, 2024</strong> - Número de Orden# 568567 <button>Ver detalle</button></p>
+              <div className="producto">
+                <img src="/resources/NikeAirMaxStructure20.png" alt="Nike Air Zoom Structure 20" />
+                <div>
+                  <p><strong>Nike Air Zoom Structure 20</strong></p>
+                  <p>Running - Talla: 10 US</p>
+                </div>
+                <div className="precio">S/. 529</div>
+                <div className="cantidad">Cantidad: 1</div>
+              </div>
+
+              <div className="producto">
+                <img src="/resources/invincible-removebg.png" alt="Nike Invincible 3" />
+                <div>
+                  <p><strong>Nike Invincible 3</strong></p>
+                  <p>Running - Talla: 10 US</p>
+                </div>
+                <div className="precio">S/. 629</div>
+                <div className="cantidad">Cantidad: 1</div>
+              </div>
+
+              <div className="totales">
+                <p>Total: <strong>S/. 1,158.00</strong></p>
+                <p className="ingresos">Ingresos Totales: <strong>S/. 1,158.00</strong></p>
+                <button className="cancelar">Cancelar Orden</button>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {seccionActiva === "usuarios" && (
+          <section className="usuarios">
+            <header className="usuarios-header">
+              <h3>Usuarios</h3>
+              <input type="text" placeholder="🔍 Buscar" />
+              <div className="filtros">
+                <input type="date" placeholder="Desde" />
+                <input type="date" placeholder="Hasta" />
+              </div>
+            </header>
+
+            <div className="usuarios-lista">
+              {[
+                "Matías Alarcón", "Diego Garcia", "Emma Ramos",
+                "Diego Jauregui", "Mateo Ocampo", "Lucas Gonzalez",
+                "Yohamin Pimentel", "Javier Targarona", "Nicolás Montero",
+                "Gonzalo Restán", "Gabriela Gavidia", "Lucia Banino",
+                "Hugo Molina", "Francisco Lee", "Ignacio Buse"
+              ].map((nombre, i) => (
+                <div key={i} className="usuario">
+                  <span className="icono">👤</span>
+                  <div className="info">
+                    <strong>{nombre}</strong>
+                    <p>Órdenes</p>
+                  </div>
+                  <button className="ban">❌</button>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {seccionActiva === "productos" && (
+          <section className="productos">
+            <header className="productos-header">
+              <h3>Lista de Productos</h3>
+              <input type="text" placeholder="🔍 Buscar" />
+            </header>
+
+            <table className="productos-tabla">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th></th>
+                  <th>NOMBRE</th>
+                  <th>CATEGORIA</th>
+                  <th>COLOR</th>
+                  <th>GÉNERO</th>
+                  <th>STOCK</th>
+                  <th>PRECIO</th>
+                  <th>ACCIONES</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ["#5574", "Nike Air Zoom Structure 20", "Morado", 19, 529],
+                  ["#5346", "Nike Air Max 90", "Negro", 27, 459],
+                  ["#7455", "Nike Campus", "Amarillo", 3, 299],
+                  ["#3564", "Nike Zoom Winflo", "Azul", 57, 679],
+                  ["#6345", "Nike Air Max 2015", "Rosado", 5, 679]
+                ].map(([id, nombre, color, stock, precio], i) => (
+                  <tr key={id}>
+                    <td>{id}</td>
+                    <td><img src={`/resources/producto${i + 1}.png`} alt={nombre} width="50" /></td>
+                    <td>{nombre}</td>
+                    <td>Running</td>
+                    <td>{color}</td>
+                    <td>Hombre</td>
+                    <td>{stock}</td>
+                    <td>S/. {precio}</td>
+                    <td>
+                      <button>✏️</button>
+                      <button>❌</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <button className="agregar">AGREGAR PRODUCTO</button>
+          </section>
+        )}
+
+        {seccionActiva === "categorias" && (
+          <section className="categorias">
+            <header className="categorias-header">
+              <h3>Lista de Categorías</h3>
+              <input type="text" placeholder="🔍 Buscar" />
+            </header>
+
+            <div className="categorias-lista">
+              {["HOMBRE", "MUJER", "NIÑOS", "MARCAS"].map((cat, i) => (
+                <div key={i} className="categoria-item">
+                  <strong>{cat}</strong>
+                  <span>
+                    <button>✏️</button>
+                    <button>❌</button>
+                  </span>
+                </div>
+              ))}
+            </div>
+            <button className="agregar">AÑADIR CATEGORIA</button>
+          </section>
+        )}
+      </main>
+    </div>
+  );
+}
